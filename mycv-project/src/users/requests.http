@@ -1,0 +1,10 @@
+### Create a new user
+
+POST http://localhost:3000/auth/signup
+content-type: application/json
+
+{
+  "email": "binth@hocmai.com",
+  "password": "Hocmai@12345",
+  "hihahehu": "hihahehu"
+}
