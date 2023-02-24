@@ -7,3 +7,24 @@ content-type: application/json
   "email": "binth@hocmai.com",
   "password": "Hocmai@12345"
 }
+
+### Find user
+
+GET http://localhost:3000/auth/1
+
+### Find all users with a given email
+
+GET http://localhost:3000/auth/?email=binth@hocmai.com
+
+### Update user by id
+
+PATCH http://localhost:3000/auth/1
+Content-Type: application/json
+
+{
+  "email": "tahoangbinh.1997@gmail.com"
+}
+
+### Delete user by id
+
+DELETE http://localhost:3000/auth/3

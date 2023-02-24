@@ -1,0 +1,10 @@
+### create a new post
+
+POST http://localhost:3000/posts/create
+content-type: application/json
+
+{
+  "title": "Binh post",
+  "category": "Study",
+  "content": "Hello is post"
+}
