@@ -1,4 +1,11 @@
-import { AfterRemove, AfterUpdate, Entity, Column, PrimaryGeneratedColumn, AfterInsert } from 'typeorm';
+import {
+  AfterRemove,
+  AfterUpdate,
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  AfterInsert,
+} from 'typeorm';
 import { Exclude } from 'class-transformer';
 
 @Entity()

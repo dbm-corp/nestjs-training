@@ -2,12 +2,11 @@ import {
   UseInterceptors,
   NestInterceptor,
   ExecutionContext,
-  CallHandler
+  CallHandler,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
-import { UserDto } from 'src/users/dtos/user.dto';
 
 interface ClassConstructor {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -29,10 +28,10 @@ export class SerializeInterceptor implements NestInterceptor {
     return handler.handle().pipe(
       map((data: any) => {
         console.log('Im running before response is sent out', data);
-        return plainToClass(UserDto, data, {
+        return plainToClass(this.dto, data, {
           excludeExtraneousValues: true,
-        })
-      })
-    )
+        });
+      }),
+    );
   }
 }

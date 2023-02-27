@@ -1,11 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Post } from './post.entity'; 
+import { Post } from './post.entity';
 
 @Injectable()
 export class PostsService {
   constructor(@InjectRepository(Post) private postRepo: Repository<Post>) {}
+
+  getAll() {
+    const posts = this.postRepo.find();
+    return posts;
+  }
 
   createPost(title: string, category: string, content: string) {
     const post = this.postRepo.create({ title, category, content });
