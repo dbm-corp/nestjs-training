@@ -9,6 +9,9 @@ import {
   Delete,
 } from '@nestjs/common';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { UserDto } from 'src/users/dtos/user.dto';
+import { User } from 'src/users/user.entity';
 import { CreatePostDto } from './dtos/create-post.dto';
 import { PostDto } from './dtos/post.dto';
 import { UpdatePostDto } from './dtos/update-post.dto';
@@ -22,6 +25,12 @@ export class PostsController {
   @Get('/get-all')
   getAllPosts() {
     return this.postService.getAll();
+  }
+
+  @Get('/who-am-i')
+  @Serialize(UserDto)
+  whoAmI(@CurrentUser() user: User) {
+    return user;
   }
 
   @Post('/create')

@@ -4,13 +4,31 @@ POST http://localhost:3000/auth/signup
 content-type: application/json
 
 {
-  "email": "binth@hocmai.com",
+  "email": "binth4@hocmai.com",
+  "password": "Hocmai@12345"
+}
+
+### App Sign iN
+
+POST http://localhost:3000/auth/signin
+content-type: application/json
+
+{
+  "email": "binth2@hocmai.com",
   "password": "Hocmai@12345"
 }
 
 ### Find user
 
 GET http://localhost:3000/auth/1
+
+### get the currently signed user
+
+GET http://localhost:3000/auth/whoami
+
+### SIGN Out
+
+POST http://localhost:3000/auth/signout
 
 ### Find all users with a given email
 
@@ -28,3 +46,11 @@ Content-Type: application/json
 ### Delete user by id
 
 DELETE http://localhost:3000/auth/3
+
+### Set a color
+
+GET http://localhost:3000/auth/colors/blueashduih1323123
+
+### Get a color
+
+GET http://localhost:3000/auth/colors
