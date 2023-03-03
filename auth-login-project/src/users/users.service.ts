@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { Like, Repository } from 'typeorm';
@@ -57,6 +57,11 @@ export class UsersService {
     return this.userRepo.save(user);
   }
 
+  async findUserById(id: number): Promise<User> {
+    const user = await this.userRepo.findOneBy({ id });
+    return user;
+  }
+
   async findUserByUsername(userName: string): Promise<User> {
     const user = await this.userRepo.findOneBy({ userName });
     return user;
@@ -65,5 +70,13 @@ export class UsersService {
   async findUserByEmail(email: string): Promise<User> {
     const user = await this.userRepo.findOneBy({ email });
     return user;
+  }
+
+  async removeUser(id: number) {
+    const user = await this.findUserById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return this.userRepo.remove(user);
   }
 }
