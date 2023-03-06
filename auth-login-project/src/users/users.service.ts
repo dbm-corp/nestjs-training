@@ -1,12 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { randomBytes, scrypt as _scrypt } from 'crypto';
+import * as bcrypt from 'bcrypt';
 import { Like, Repository } from 'typeorm';
-import { promisify } from 'util';
 import { User } from '../entities/user.entity';
 import { Pagination, PaginationOptionsInterface } from '../paginate';
-
-const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class UsersService {
@@ -31,14 +28,7 @@ export class UsersService {
 
   async generatePassword(password: string) {
     // Hash the users password
-    // Generate a salt
-    const salt = randomBytes(8).toString('hex');
-
-    // Hash the salt and the password together
-    const hash = (await scrypt(password, salt, 32)) as Buffer;
-
-    // Join the hashed result and the salt together
-    const result = salt + '.' + hash.toString('hex');
+    const result = bcrypt.hash(password, 12);
     return result;
   }
 
@@ -70,6 +60,17 @@ export class UsersService {
   async findUserByEmail(email: string): Promise<User> {
     const user = await this.userRepo.findOneBy({ email });
     return user;
+  }
+
+  async updateUser(id: number, attrs: Partial<User>) {
+    const user = await this.userRepo.findOneBy({ id });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    Object.assign(user, attrs);
+
+    return this.userRepo.save(user);
   }
 
   async removeUser(id: number) {
