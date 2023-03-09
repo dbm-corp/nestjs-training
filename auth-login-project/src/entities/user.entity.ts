@@ -15,6 +15,9 @@ export class User extends BaseEntity {
   @Exclude()
   password: string;
 
+  @Column()
+  refreshToken: string;
+
   @OneToMany(() => Report, (report) => report.user)
   reports: Report[];
 }
