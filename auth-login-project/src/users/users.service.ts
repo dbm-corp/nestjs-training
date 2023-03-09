@@ -28,7 +28,7 @@ export class UsersService {
 
   async generatePassword(password: string) {
     // Hash the users password
-    const result = bcrypt.hash(password, 12);
+    const result = await bcrypt.hash(password, 12);
     return result;
   }
 
@@ -37,12 +37,13 @@ export class UsersService {
     email: string,
     password: string,
   ): Promise<User> {
-    const result = await this.generatePassword(password);
+    const result = await bcrypt.hash(password, 12);
     // Create a new user and save it
     const user = await this.userRepo.create({
       userName,
       email,
       password: result,
+      refreshToken: '',
     });
     return this.userRepo.save(user);
   }
