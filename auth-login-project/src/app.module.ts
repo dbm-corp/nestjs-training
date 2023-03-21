@@ -21,7 +21,11 @@ import { Report } from './entities/report.entity';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
         return {
-          type: 'sqlite',
+          type: 'mysql',
+          host: 'localhost',
+          username: 'root',
+          password: '',
+          port: 3306,
           database: config.get<string>('DB_NAME'),
           synchronize: true,
           entities: [User, Report],
